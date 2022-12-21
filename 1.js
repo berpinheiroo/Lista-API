@@ -57,19 +57,37 @@ while (Continuar) {
             BuscarPorId(id);
             break;
         case "3":
-            var idCarro = Number(prompt("Qual o ID do Carro ?"));
             var Marca = String(prompt("Qual a Marca do Carro ?"));
             var Modelo = String(prompt("Qual o Modelo do Carro ?"));
             var Categoria = String(prompt("Qual a Categoria do Carro ?"));
             var Ano = Number(prompt("Qual o Ano do Carro ?"));
             var Km = Number(prompt("Qual o Km do Carro ?"));
             var Valor = Number(prompt("Qual o Valor do Carro ?"));
-            var Cadastrar_1 = new Carro(Marca, Modelo, Categoria, Ano, Km, Valor);
-            AlterarValor(idCarro, Cadastrar_1)
-                .then(function (data) {
-                console.log(data);
+            Cadastrar({
+                Marca: Marca,
+                Modelo: Modelo,
+                Categoria: Categoria,
+                Ano: Ano,
+                Km: Km,
+                Valor: Valor
             });
             break;
+        case "4":
+            var idCarro = Number(prompt("Qual o id do carro?"));
+            var Marca2 = String(prompt("Qual a Marca do Carro ?"));
+            var Modelo2 = String(prompt("Qual o Modelo do Carro ?"));
+            var Categoria2 = String(prompt("Qual a Categoria do Carro ?"));
+            var Ano2 = Number(prompt("Qual o Ano do Carro ?"));
+            var Km2 = Number(prompt("Qual o Km do Carro ?"));
+            var Valor2 = Number(prompt("Qual o Valor do Carro ?"));
+            AlterarValor(idCarro, {
+                Marca2: Marca2,
+                Modelo2: Modelo2,
+                Categoria2: Categoria2,
+                Ano2: Ano2,
+                Km2: Km2,
+                Valor2: Valor2
+            });
         case "4":
             var idCarDelete = Number(prompt("Qual o ID do Carro ?"));
             Delete(idCarDelete);

@@ -34,21 +34,38 @@ while(Continuar){
         break;
 
         case "3":
-        let idCarro = Number(prompt("Qual o ID do Carro ?"))
         const Marca = String(prompt("Qual a Marca do Carro ?"))
         const Modelo = String(prompt("Qual o Modelo do Carro ?"))
         const Categoria = String(prompt("Qual a Categoria do Carro ?"))
         const Ano = Number(prompt("Qual o Ano do Carro ?"))
         const Km = Number(prompt("Qual o Km do Carro ?"))
         const Valor = Number(prompt("Qual o Valor do Carro ?"))
-
-        const Cadastrar = new Carro(Marca, Modelo, Categoria, Ano, Km, Valor)
-        AlterarValor(idCarro, Cadastrar)
-            .then((data) => {
-            console.log(data);
-        });
-
+        Cadastrar({
+            Marca,
+            Modelo,
+            Categoria,
+            Ano,
+            Km,
+            Valor
+        })
         break;
+
+        case "4":
+        const idCarro = Number(prompt("Qual o id do carro?"))
+        const Marca2 = String(prompt("Qual a Marca do Carro ?"))
+        const Modelo2 = String(prompt("Qual o Modelo do Carro ?"))
+        const Categoria2 = String(prompt("Qual a Categoria do Carro ?"))
+        const Ano2 = Number(prompt("Qual o Ano do Carro ?"))
+        const Km2 = Number(prompt("Qual o Km do Carro ?"))
+        const Valor2 = Number(prompt("Qual o Valor do Carro ?"))
+            AlterarValor(idCarro, {
+                Marca2,
+                Modelo2,
+                Categoria2,
+                Ano2,
+                Km2,
+                Valor2
+            })
 
         case "4":
         let idCarDelete = Number(prompt("Qual o ID do Carro ?"))
