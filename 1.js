@@ -13,7 +13,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
+        while (g && (g = 0, op[0] && (_ = 0)), _) try {
             if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
             if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
@@ -45,27 +45,72 @@ var Carro = /** @class */ (function () {
     }
     return Carro;
 }());
-var novoCarro = new Carro("Honda", "City", "passeio", 2022, 20000, 50000);
-Cadastrar(novoCarro)
-.then((data) => {
-console.log(data);
-});
-BuscarTodos()
-BuscarPorId(1)
-// AlterarValor(1, novoCarro)
-// .then((data) => {
-// console.log(data);
-// });
-Delete(2);
-function BuscarTodos(id) {
-    fetch("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros")
+var Continuar = true;
+while (Continuar) {
+    var Pergunta = String(prompt("1 Ver Carros /// 2 Ver Carro por ID /// 3 Adicionar Carro /// 4 Atualizar Carro /// 5 Deletar Carro /// 5 Finalizar Programa"));
+    switch (Pergunta) {
+        case "1":
+            BuscarTodos();
+            break;
+        case "2":
+            var id = Number(prompt("Qual o ID do Carro ?"));
+            BuscarPorId(id);
+            break;
+        case "3":
+            var idCarro = Number(prompt("Qual o ID do Carro ?"));
+            var Marca = String(prompt("Qual a Marca do Carro ?"));
+            var Modelo = String(prompt("Qual o Modelo do Carro ?"));
+            var Categoria = String(prompt("Qual a Categoria do Carro ?"));
+            var Ano = Number(prompt("Qual o Ano do Carro ?"));
+            var Km = Number(prompt("Qual o Km do Carro ?"));
+            var Valor = Number(prompt("Qual o Valor do Carro ?"));
+            var Cadastrar_1 = new Carro(Marca, Modelo, Categoria, Ano, Km, Valor);
+            AlterarValor(idCarro, Cadastrar_1)
+                .then(function (data) {
+                console.log(data);
+            });
+            break;
+        case "4":
+            var idCarDelete = Number(prompt("Qual o ID do Carro ?"));
+            Delete(idCarDelete);
+            break;
+        case "5":
+            Continuar = false;
+            break;
+        default:
+            alert("Opção Inválida");
+            break;
+    }
+}
+function BuscarTodos() {
+    var ListaCarros = [];
+    fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros")
         .then(function (response) { return response.json(); })
-        .then(function (data) { return console.log(data); });
+        .then(function (data) {
+        for (var index = 0; index < data.length; index++) {
+            ListaCarros.push(data[index].Modelo);
+        }
+    });
+    console.log(ListaCarros);
 }
 function BuscarPorId(id) {
-    fetch("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros/".concat(id))
+    fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/".concat(id))
         .then(function (response) { return response.json(); })
-        .then(function (data) { return console.log(data); });
+        .then(function (data) {
+        if (data.id == id) {
+            var Marca = data.Marca;
+            var Modelo = data.Modelo;
+            var Ano = data.Ano;
+            var Valor = data.Valor;
+            var CarroPropriedades = {
+                Marca: Marca,
+                Modelo: Modelo,
+                Ano: Ano,
+                Valor: Valor
+            };
+            console.log(CarroPropriedades);
+        }
+    });
 }
 function Cadastrar(data) {
     if (data === void 0) { data = {}; }
@@ -73,7 +118,7 @@ function Cadastrar(data) {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros", {
+                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros", {
                         method: 'POST',
                         mode: 'cors',
                         cache: 'no-cache',
@@ -92,13 +137,13 @@ function Cadastrar(data) {
         });
     });
 }
-function AlterarValor(id, data) {
+function AlterarValor(idCarro, data) {
     if (data === void 0) { data = {}; }
     return __awaiter(this, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros/".concat(id), {
+                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/".concat(idCarro), {
                         method: 'PUT',
                         mode: 'cors',
                         cache: 'no-cache',
@@ -117,12 +162,12 @@ function AlterarValor(id, data) {
         });
     });
 }
-function Delete(id) {
+function Delete(idCarDelete) {
     return __awaiter(this, void 0, void 0, function () {
         var response;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/NhvgcmA_/Carros/".concat(id), {
+                case 0: return [4 /*yield*/, fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/".concat(idCarDelete), {
                         method: 'DELETE',
                         mode: 'cors',
                         cache: 'no-cache',

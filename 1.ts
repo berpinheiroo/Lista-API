@@ -18,36 +18,88 @@ class Carro{
     }
 }
 
-let novoCarro = new Carro("Honda", "City", "passeio", 2022, 20000, 50000)
+let Continuar = true
 
-// Cadastrar(novoCarro)
-// .then((data) => {
-// console.log(data);
-// });
+while(Continuar){
+    let Pergunta = String(prompt("1 Ver Carros /// 2 Ver Carro por ID /// 3 Adicionar Carro /// 4 Atualizar Carro /// 5 Deletar Carro /// 5 Finalizar Programa"))
+    switch(Pergunta){
 
-// BuscarTodos()
-// BuscarPorId(3)
+        case "1":
+        BuscarTodos()
+        break;
 
-// AlterarValor(3, novoCarro)
-// .then((data) => {
-// console.log(data);
-// });
+        case "2":
+        let id = Number(prompt("Qual o ID do Carro ?"))
+        BuscarPorId(id)
+        break;
 
-// Delete(2)
+        case "3":
+        let idCarro = Number(prompt("Qual o ID do Carro ?"))
+        const Marca = String(prompt("Qual a Marca do Carro ?"))
+        const Modelo = String(prompt("Qual o Modelo do Carro ?"))
+        const Categoria = String(prompt("Qual a Categoria do Carro ?"))
+        const Ano = Number(prompt("Qual o Ano do Carro ?"))
+        const Km = Number(prompt("Qual o Km do Carro ?"))
+        const Valor = Number(prompt("Qual o Valor do Carro ?"))
 
-function BuscarTodos(id: number) {
-     fetch ("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros")
-    .then((response) => response.json())
-    .then((data) => console.log(data)); 
+        const Cadastrar = new Carro(Marca, Modelo, Categoria, Ano, Km, Valor)
+        AlterarValor(idCarro, Cadastrar)
+            .then((data) => {
+            console.log(data);
+        });
+
+        break;
+
+        case "4":
+        let idCarDelete = Number(prompt("Qual o ID do Carro ?"))
+        Delete(idCarDelete)
+        break;
+
+        case "5":
+        Continuar = false
+        break;
+
+        default:
+        alert("Opção Inválida")
+        break;
+    }
+}
+
+function BuscarTodos() {
+    let ListaCarros: string [] = []
+     fetch ("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros")
+     .then((response) => response.json())
+     .then((data) => {
+         for (let index = 0; index < data.length; index++) {
+             ListaCarros.push(data[index].Modelo)
+         }
+     });
+     console.log(ListaCarros)
  }
  function BuscarPorId(id: number) {
-    fetch (`https://apigenerator.dronahq.com/api/wPX4uKnz/Carros/${id}`)
-   .then((response) => response.json())
-   .then((data) => console.log(data)); 
+    fetch (`https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/${id}`)
+    .then((response) => response.json())
+    .then((data) => {
+        if(data.id == id){
+            const Marca = data.Marca
+            const Modelo = data.Modelo
+            const Ano = data.Ano
+            const Valor = data.Valor
+
+            const CarroPropriedades = {
+                Marca: Marca,
+                Modelo: Modelo,
+                Ano: Ano,
+                Valor: Valor,
+            }
+            console.log(CarroPropriedades)
+        }
+    });
+
 }
 
  async function Cadastrar(data = {}) {
-    const response = await fetch("https://apigenerator.dronahq.com/api/wPX4uKnz/Carros", {
+    const response = await fetch("https://apigenerator.dronahq.com/api/F8cmGeH_/Carros", {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors',
     cache: 'no-cache',
@@ -62,8 +114,8 @@ function BuscarTodos(id: number) {
     return response.json();
 }
 
-async function AlterarValor(id: number, data = {}) {
-    const response = await fetch(`https://apigenerator.dronahq.com/api/wPX4uKnz/Carros/${id}`, {
+async function AlterarValor(idCarro: number, data = {}) {
+    const response = await fetch(`https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/${idCarro}`, {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors',
     cache: 'no-cache',
@@ -78,8 +130,8 @@ async function AlterarValor(id: number, data = {}) {
     return response.json();
 }
 
-async function Delete(id: number) {
-    const response = await fetch(`https://apigenerator.dronahq.com/api/NhvgcmA_/Carros/${id}`, {
+async function Delete(idCarDelete: number) {
+    const response = await fetch(`https://apigenerator.dronahq.com/api/F8cmGeH_/Carros/${idCarDelete}`, {
     method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors',
     cache: 'no-cache',
